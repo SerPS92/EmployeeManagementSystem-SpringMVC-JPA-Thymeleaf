@@ -40,25 +40,43 @@
 					
 					<!-- Page Heading -->
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+						<h1 class="h3 mb-0 text-gray-800"
+						    th:text="${employee.name + ' ' + employee.lastName + '´s profile'}"></h1>
 					</div>
 					
 					<!-- Content Row -->
 					<div class="row">
 						
-						<!--Users-->
-						<div class="col-lg-6">
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<a class="m-0 font-weight-bold text-primary"
-									   th:href="@{/employees/show}">Employees</a>
-								</div>
-								<div class="card-body">
-									<img class="card-img-top" src="images/Users.jpg" style="height: 200px">
-								</div>
+						<div style="display: flex; justify-content: space-between;">
+							
+							<div style="width: 48%;">
+								<h4>Personal information</h4>
+								<p><strong>Name:</strong> <span th:text="${employee.name}"></span></p>
+								<p><strong>Last Name:</strong> <span th:text="${employee.lastName}"></span></p>
+								<p><strong>Gender:</strong> <span th:text="${employee.gender}"></span></p>
+								<p><strong>Marital Status:</strong>
+									<span th:text="${employee.maritalStatus}"></span></p>
+								<p><strong>Phone:</strong> <span th:text="${employee.phone}"></span></p>
+								<p><strong>Email:</strong> <span th:text="${employee.email}"></span></p>
+								<p><strong>Id Document:</strong> <span th:text="${employee.idDocument}"></span></p>
+								<p><strong>Birthday:</strong>
+									<span th:text="${#dates.format(employee.birthday, 'dd/MM/yyyy')}"></span></p>
 							</div>
-						</div>
+							
+							<!-- Datos Laborales -->
+							<div style="width: 48%;">
+								<h4>Work information</h4>
+								<br>
+								<p><strong>Department:</strong> <span th:text="${employee.department}"></span></p>
+								<p><strong>Position:</strong> <span th:text="${employee.position}"></span></p>
+								<p><strong>Start Date Contract:</strong>
+									<span th:text="${#dates.format(employee.startDateContract, 'dd/MM/yyyy')}"></span></p>
+								<p><strong>End Date Contract:</strong>
+									<span th:text="${#dates.format(employee.endDateContract, 'dd/MM/yyyy')}"></span></p>
+								<p><strong>Salary:</strong> <span th:text="${employee.salary}"></span></p>
+							</div>
 						
+						</div>
 					</div>
 				
 				</div>

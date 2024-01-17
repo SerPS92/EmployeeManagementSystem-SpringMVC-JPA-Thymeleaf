@@ -40,25 +40,55 @@
 					
 					<!-- Page Heading -->
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+						<h1 class="h3 mb-0 text-gray-800">Employees</h1>
 					</div>
 					
 					<!-- Content Row -->
 					<div class="row">
 						
-						<!--Users-->
-						<div class="col-lg-6">
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<a class="m-0 font-weight-bold text-primary"
-									   th:href="@{/employees/show}">Employees</a>
-								</div>
-								<div class="card-body">
-									<img class="card-img-top" src="images/Users.jpg" style="height: 200px">
-								</div>
-							</div>
-						</div>
-						
+						<table class="table">
+							<thead>
+							<tr>
+								<th scope="col">Name</th>
+								<th scope="col">Lastname</th>
+								<th scope="col">Phone</th>
+								<th scope="col">Email</th>
+								<th scope="col">Department</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="employee:${employees}">
+								<td th:text="${employee.name}"></td>
+								<td th:text="${employee.lastName}"></td>
+								<td th:text="${employee.phone}"></td>
+								<td th:text="${employee.email}"></td>
+								<td th:text="${employee.department}"></td>
+								<td>
+									<div class="btn-group">
+										<button type="button" class="btn btn-primary"
+										        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Actions
+										</button>
+										<div class="dropdown-menu">
+											<a class="dropdown-item"
+											   th:href="@{/employees/profile/{id} (id = ${employee.id})}">
+												Show profile</a>
+											<a class="dropdown-item"
+											   href="">
+												Show absences</a>
+											<a class="dropdown-item"
+											   href="">
+												Edit</a>
+											<a class="dropdown-item"
+											   href="">
+												Delete</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					
 					</div>
 				
 				</div>
