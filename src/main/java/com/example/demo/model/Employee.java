@@ -27,6 +27,7 @@ public class Employee {
     private String email;
     private String idDocument;
     private String state;
+    private String image;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

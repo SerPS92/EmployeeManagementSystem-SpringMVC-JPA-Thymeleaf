@@ -63,17 +63,27 @@
 									<span th:text="${#dates.format(employee.birthday, 'dd/MM/yyyy')}"></span></p>
 							</div>
 							
-							<!-- Datos Laborales -->
 							<div style="width: 48%;">
 								<h4>Work information</h4>
 								<br>
 								<p><strong>Department:</strong> <span th:text="${employee.department}"></span></p>
 								<p><strong>Position:</strong> <span th:text="${employee.position}"></span></p>
 								<p><strong>Start Date Contract:</strong>
-									<span th:text="${#dates.format(employee.startDateContract, 'dd/MM/yyyy')}"></span></p>
+									<span th:text="${#dates.format(employee.startDateContract, 'dd/MM/yyyy')}"></span>
+								</p>
 								<p><strong>End Date Contract:</strong>
 									<span th:text="${#dates.format(employee.endDateContract, 'dd/MM/yyyy')}"></span></p>
 								<p><strong>Salary:</strong> <span th:text="${employee.salary}"></span></p>
+							</div>
+							
+							<div style="width: 35%;">
+								
+								<div class="product-img position-relative overflow-hidden">
+									<img class="img-fluid"
+									     th:src="@{/images/{img} (img = ${employee.image})}" alt=""
+									     style="width: 350px; height: 250px;">
+								</div>
+							
 							</div>
 						
 						</div>

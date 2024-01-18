@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Employee;
 import com.example.demo.service.IEmployeeService;
+import com.example.demo.service.UploadFileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -9,11 +10,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Controller
@@ -23,9 +23,12 @@ public class EmployeesController {
     private final Logger log = LoggerFactory.getLogger(EmployeesController.class);
 
     private final IEmployeeService employeeService;
+    private final UploadFileService uploadFileService;
 
-    public EmployeesController(IEmployeeService employeeService) {
+    public EmployeesController(IEmployeeService employeeService,
+                               UploadFileService uploadFileService) {
         this.employeeService = employeeService;
+        this.uploadFileService = uploadFileService;
     }
 
     @GetMapping("/show")
@@ -49,5 +52,21 @@ public class EmployeesController {
 
         model.addAttribute("employee", employee);
         return "employee/profile";
+    }
+
+    @GetMapping("/create")
+    public String create(){
+        return "employee/create";
+    }
+
+    @PostMapping("/save")
+    public String save(Employee employee,
+                       @RequestParam("img")MultipartFile file) throws IOException {
+        if(employee.getId() == null){
+            String nameImage = uploadFileService.saveImage(file);
+            employee.setImage(nameImage);
+        }
+        employeeService.save(employee);
+        return "redirect:/employees/show";
     }
 }
