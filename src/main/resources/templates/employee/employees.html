@@ -82,10 +82,10 @@
 											   href="">
 												Show absences</a>
 											<a class="dropdown-item"
-											   href="">
+											   th:href="@{/employees/edit/{id} (id = ${employee.id})}">
 												Edit</a>
 											<a class="dropdown-item"
-											   href="">
+											   th:href="@{/employees/delete/{id} (id = ${employee.id})}">
 												Delete</a>
 										</div>
 									</div>

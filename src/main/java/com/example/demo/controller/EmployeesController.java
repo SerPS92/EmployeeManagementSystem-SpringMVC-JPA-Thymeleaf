@@ -69,4 +69,35 @@ public class EmployeesController {
         employeeService.save(employee);
         return "redirect:/employees/show";
     }
+
+    @GetMapping("/edit/{id}")
+    public String edit(Model model,
+                       @PathVariable(name = "id")Integer id) {
+        Optional<Employee> optionalEmployee = employeeService.findById(id);
+        Employee employee = optionalEmployee.orElse(null);
+        model.addAttribute("employee", employee);
+        return "employee/edit";
+    }
+
+    @PostMapping("/update")
+    public String update(Employee employee,
+                         @RequestParam("img") MultipartFile file) throws IOException {
+        if(!file.isEmpty()){
+            String nameImage = uploadFileService.saveImage(file);
+            employee.setImage(nameImage);
+        }
+        employeeService.save(employee);
+        return "redirect:/employees/show";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable(name = "id")Integer id){
+        Employee employee = new Employee();
+        employee = employeeService.findById(id).get();
+        if(!employee.getImage().equals("default.jpg")){
+            uploadFileService.deleteImage(employee.getImage());
+        }
+        employeeService.deleteById(id);
+        return "redirect:/employees/show";
+    }
 }
