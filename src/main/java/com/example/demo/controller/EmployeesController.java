@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Employee;
 import com.example.demo.service.IEmployeeService;
 import com.example.demo.service.UploadFileService;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,7 @@ public class EmployeesController {
 
     private final IEmployeeService employeeService;
     private final UploadFileService uploadFileService;
+    HttpSession session;
 
     public EmployeesController(IEmployeeService employeeService,
                                UploadFileService uploadFileService) {
@@ -34,13 +36,16 @@ public class EmployeesController {
 
     @GetMapping("/show")
     public String employees(@RequestParam(name = "page", defaultValue = "0")int page,
-                            @RequestParam(name = "size", defaultValue = "10")int size,
-                            @RequestParam(name = "field", defaultValue = "No") String field,
+                            @RequestParam(name = "size", defaultValue = "3")int size,
+                            @RequestParam(name = "field") String field,
                             Model model){
-        Sort sort = Sort.by(field);
+        Sort sort = null;
         Pageable pageable;
-        if(!field.equals("No")){
+
+        if(!field.isEmpty()){
+            sort = Sort.by(field);
             pageable = PageRequest.of(page, size, sort);
+            model.addAttribute("field", field);
         } else {
             pageable = PageRequest.of(page, size);
         }
@@ -92,9 +97,15 @@ public class EmployeesController {
     @PostMapping("/update")
     public String update(Employee employee,
                          @RequestParam("img") MultipartFile file) throws IOException {
+
+        int id = Math.toIntExact(employee.getId());
+        Optional<Employee> optionalEmployee = employeeService.findById(id);
+
         if(!file.isEmpty()){
             String nameImage = uploadFileService.saveImage(file);
             employee.setImage(nameImage);
+        } else{
+            employee.setImage(optionalEmployee.get().getImage());
         }
         employeeService.save(employee);
         return "redirect:/employees/show";

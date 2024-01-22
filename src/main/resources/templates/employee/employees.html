@@ -55,10 +55,17 @@
 								<th scope="col">
 									<a th:href="@{/employees/show?field=name}">Name</a>
 								</th>
-								<th scope="col">Lastname</th>
+								<th scope="col">
+									<a th:href="@{/employees/show?field=lastName}">Lastname</a>
+								</th>
 								<th scope="col">Phone</th>
 								<th scope="col">Email</th>
-								<th scope="col">Department</th>
+								<th scope="col">
+									<a th:href="@{/employees/show?field=department}">Department</a>
+								</th>
+								<th scope="col">
+									<a th:href="@{/employees/show?field=state}">State</a>
+								</th>
 							</tr>
 							</thead>
 							<tbody>
@@ -70,6 +77,7 @@
 								<td th:text="${employee.phone}"></td>
 								<td th:text="${employee.email}"></td>
 								<td th:text="${employee.department}"></td>
+								<td th:text="${employee.state}"></td>
 								<td>
 									<div class="btn-group">
 										<button type="button" class="btn btn-primary"
@@ -101,7 +109,7 @@
 										<div th:if="${currentPage > 0}">
 											<li class="page-item">
 												<a class="page-link"
-												   th:href="@{/employees/show(page=${currentPage - 1})}"
+												   th:href="@{/employees/show(page=${currentPage - 1}, field=${field})}"
 												   aria-label="Previous">
 													<span aria-hidden="true">&laquo;</span>
 												</a>
@@ -117,7 +125,8 @@
 										<th:block th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}"
 										          th:if="${pageNumber >= currentPage - 2 and pageNumber <= currentPage + 2}">
 											<li th:class="${pageNumber == currentPage} ? 'page-item active' : 'page-item'">
-												<a class="page-link" th:href="@{/employees/show(page=${pageNumber})}"
+												<a class="page-link"
+												   th:href="@{/employees/show(page=${pageNumber}, field=${field})}"
 												   th:text="${pageNumber + 1}"></a>
 											</li>
 										</th:block>
@@ -135,7 +144,6 @@
 							</div>
 						
 						</table>
-					
 					</div>
 				
 				</div>
