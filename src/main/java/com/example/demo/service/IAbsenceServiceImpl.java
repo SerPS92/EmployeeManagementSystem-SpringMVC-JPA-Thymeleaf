@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Absence;
+import com.example.demo.model.Employee;
 import com.example.demo.repository.IAbsenceRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,5 +41,10 @@ public class IAbsenceServiceImpl implements IAbsenceService {
     @Override
     public Page<Absence> findAll(Pageable pageable) {
         return absenceRepo.findAll(pageable);
+    }
+
+    @Override
+    public Page<Absence> findByEmployee(Employee employee, Pageable pageable) {
+        return absenceRepo.findByEmployee(employee, pageable);
     }
 }

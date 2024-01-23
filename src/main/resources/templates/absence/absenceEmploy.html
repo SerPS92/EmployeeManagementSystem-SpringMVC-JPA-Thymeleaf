@@ -40,11 +40,9 @@
 					
 					<!-- Page Heading -->
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">Employees</h1>
+						<h1 class="h3 mb-0 text-gray-800"
+						    th:text="${employee.name + ' ' + employee.lastName + '´s absences'}"></h1>
 					</div>
-					
-					<a type="button" class="btn btn-primary" th:href="@{/employees/create}">Create</a>
-					<br></br>
 					
 					<!-- Content Row -->
 					<div class="row">
@@ -52,67 +50,31 @@
 						<table class="table">
 							<thead>
 							<tr>
-								<th scope="col">
-									<a th:href="@{/employees/show?field=name}">Name</a>
-								</th>
-								<th scope="col">
-									<a th:href="@{/employees/show?field=lastName}">Lastname</a>
-								</th>
-								<th scope="col">Phone</th>
-								<th scope="col">Email</th>
-								<th scope="col">
-									<a th:href="@{/employees/show?field=department}">Department</a>
-								</th>
-								<th scope="col">
-									<a th:href="@{/employees/show?field=state}">State</a>
-								</th>
+								<th scope="col">Start day</th>
+								<th scope="col">End day</th>
+								<th scope="col">Reason</th>
+								<th scope="col">Justify</th>
 							</tr>
 							</thead>
 							<tbody>
-							<tr th:each="employee:${employees}">
+							<tr th:each="absence:${absences}">
+								<td th:text="${#dates.format(absence.startDay, 'dd/MM/yyyy')}"></td>
+								<td th:text="${#dates.format(absence.endDay, 'dd/MM/yyyy')}"></td>
+								<td th:text=${absence.reason}></td>
+								<td th:text="${absence.justify ? '✔' : 'X'}"></td>
 								<td>
-									<a th:href="@{/employees/profile/{id} (id = ${employee.id})}"
-									   th:text="${employee.name}"></a></td>
-								<td th:text="${employee.lastName}"></td>
-								<td th:text="${employee.phone}"></td>
-								<td th:text="${employee.email}"></td>
-								<td th:text="${employee.department}"></td>
-								<td th:text="${employee.state}"></td>
-								<td>
-									<div class="btn-group">
-										<button type="button" class="btn btn-primary"
-										        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Actions
-										</button>
-										<div class="dropdown-menu">
-											<a class="dropdown-item"
-											   th:href="@{/employees/profile/{id} (id = ${employee.id})}">
-												Show profile</a>
-											<a class="dropdown-item"
-											   th:href="@{/absences/create/{id} (id = ${employee.id})}">
-												Add absence</a>
-											<a class="dropdown-item"
-											   th:href="@{/absences/absenceEmploy/{id} (id = ${employee.id})}">
-												Show absences</a>
-											<a class="dropdown-item"
-											   th:href="@{/employees/edit/{id} (id = ${employee.id})}">
-												Edit</a>
-											<a class="dropdown-item"
-											   th:href="@{/employees/delete/{id} (id = ${employee.id})}">
-												Delete</a>
-										</div>
-									</div>
+									<a th:href="@{/absences/delete/{id} (id = ${absence.id})}">Delete</a>
 								</td>
 							</tr>
 							</tbody>
 							
-							<div th:if="${employeesNumber > 0}">
+							<div th:if="${absencesNumber > 0}">
 								<nav aria-label="Page navigation">
 									<ul class="pagination">
 										<div th:if="${currentPage > 0}">
 											<li class="page-item">
 												<a class="page-link"
-												   th:href="@{/employees/show(page=${currentPage - 1}, field=${field})}"
+												   th:href="@{/absences/show(page=${currentPage - 1})}"
 												   aria-label="Previous">
 													<span aria-hidden="true">&laquo;</span>
 												</a>
@@ -129,14 +91,14 @@
 										          th:if="${pageNumber >= currentPage - 2 and pageNumber <= currentPage + 2}">
 											<li th:class="${pageNumber == currentPage} ? 'page-item active' : 'page-item'">
 												<a class="page-link"
-												   th:href="@{/employees/show(page=${pageNumber}, field=${field})}"
+												   th:href="@{/absences/show(page=${pageNumber})}"
 												   th:text="${pageNumber + 1}"></a>
 											</li>
 										</th:block>
 										<div th:if="${currentPage < totalPages -1}">
 											<li class="page-item">
 												<a class="page-link"
-												   th:href="@{/employees/show(page=${currentPage + 1})}"
+												   th:href="@{/absences/show(page=${currentPage + 1})}"
 												   aria-label="Next">
 													<span aria-hidden="true">&raquo;</span>
 												</a>

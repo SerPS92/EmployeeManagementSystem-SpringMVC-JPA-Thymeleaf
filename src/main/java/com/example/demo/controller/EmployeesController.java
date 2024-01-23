@@ -23,7 +23,6 @@ import java.util.Optional;
 public class EmployeesController {
 
     private final Logger log = LoggerFactory.getLogger(EmployeesController.class);
-
     private final IEmployeeService employeeService;
     private final UploadFileService uploadFileService;
     HttpSession session;
@@ -36,7 +35,7 @@ public class EmployeesController {
 
     @GetMapping("/show")
     public String employees(@RequestParam(name = "page", defaultValue = "0")int page,
-                            @RequestParam(name = "size", defaultValue = "3")int size,
+                            @RequestParam(name = "size", defaultValue = "8")int size,
                             @RequestParam(name = "field") String field,
                             Model model){
         Sort sort = null;
