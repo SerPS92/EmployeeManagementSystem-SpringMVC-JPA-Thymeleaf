@@ -120,4 +120,16 @@ public class EmployeesController {
         employeeService.deleteById(id);
         return "redirect:/employees/show";
     }
+
+    @GetMapping("/search")
+    public String search(@RequestParam(name = "name") String name,
+                         @RequestParam(name = "page", defaultValue = "0")int page,
+                         @RequestParam(name = "size", defaultValue = "8")int size,
+                         Model model){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Employee> employees = employeeService.findAllByNameContains(name, pageable);
+        model.addAttribute("employees", employees);
+
+        return "employee/employees";
+    }
 }

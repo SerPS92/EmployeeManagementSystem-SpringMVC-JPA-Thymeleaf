@@ -12,5 +12,5 @@ import java.util.List;
 
 @Repository
 public interface IEmployeeRepo extends JpaRepository<Employee, Integer> {
-
+    Page<Employee> findAllByNameContains(String name, Pageable pageable);
 }

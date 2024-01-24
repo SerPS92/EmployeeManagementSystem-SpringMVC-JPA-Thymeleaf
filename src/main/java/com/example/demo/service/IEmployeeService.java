@@ -12,4 +12,5 @@ public interface IEmployeeService {
     void deleteById(Integer id);
     void update(Employee employee);
     Page<Employee> findAll(Pageable pageable);
+    Page<Employee> findAllByNameContains(String name, Pageable pageable);
 }

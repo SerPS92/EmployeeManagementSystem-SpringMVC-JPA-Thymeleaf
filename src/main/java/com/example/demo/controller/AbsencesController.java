@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +33,8 @@ public class AbsencesController {
     public String show(@RequestParam(name = "page", defaultValue = "0")int page,
                        @RequestParam(name = "size", defaultValue = "8")int size,
                        Model model){
-
-        Pageable pageable = PageRequest.of(page, size);
+        Sort sort = Sort.by(Sort.Order.desc("id"));
+        Pageable pageable = PageRequest.of(page, size, sort);
         Page<Absence> absences = absenceService.findAll(pageable);
 
         model.addAttribute("absences", absences);
@@ -48,7 +49,8 @@ public class AbsencesController {
                                 @RequestParam(name = "page", defaultValue = "0")int page,
                                 @RequestParam(name = "size", defaultValue = "8")int size,
                                 Model model){
-        Pageable pageable = PageRequest.of(page, size);
+        Sort sort = Sort.by(Sort.Order.desc("id"));
+        Pageable pageable = PageRequest.of(page, size, sort);
         Employee employee = employeeService.findById(id).orElse(null);
         Page<Absence> absences = absenceService.findByEmployee(employee, pageable);
         model.addAttribute("absences", absences);
