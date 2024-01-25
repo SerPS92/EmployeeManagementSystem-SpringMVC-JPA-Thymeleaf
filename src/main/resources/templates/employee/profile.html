@@ -25,7 +25,10 @@
 <div id="wrapper">
 	
 	<!--Sidebar-->
-	<div th:insert="~{templates/admin_template.html::sidebar}"></div>
+	<div th:insert="~{templates/admin_template.html::sidebar}"
+	     th:if="${session.type == 'admin'}"></div>
+	<div th:insert="~{templates/admin_template.html::sidebar_rrhh}"
+	     th:if="${session.type == 'rrhh'}"></div>
 	
 	
 	<div id="content-wrapper" class="d-flex flex-column">

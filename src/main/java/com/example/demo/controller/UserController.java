@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/users")
 public class UserController {
@@ -54,9 +56,24 @@ public class UserController {
         return "redirect:/users/show";
     }
 
+    @PostMapping("/update")
+    public String update(User user){
+        Optional<User> optionalUser = userService.findById(Math.toIntExact(user.getId()));
+
+        if(optionalUser.isPresent() && optionalUser.get().getPassword().equals(user.getPassword())){
+            user.setPassword(optionalUser.get().getPassword());
+        } else if(optionalUser.isPresent()){
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+        userService.update(user);
+        return "redirect:/users/show";
+    }
+
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable(name = "id")Integer id){
         userService.deleteById(id);
         return "redirect:/users/show";
     }
+
 }

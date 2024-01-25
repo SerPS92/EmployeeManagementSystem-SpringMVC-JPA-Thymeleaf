@@ -25,65 +25,51 @@
 <div id="wrapper">
 	
 	<!--Sidebar-->
-	<div th:insert="~{templates/admin_template.html::sidebar}"
-		 th:if="${session.type == 'admin'}"></div>
-	<div th:insert="~{templates/admin_template.html::sidebar_rrhh}"
-	     th:if="${session.type == 'rrhh'}"></div>
+	<div th:insert="~{templates/admin_template.html::sidebar_noSession}"></div>
 	
 	
 	<div id="content-wrapper" class="d-flex flex-column">
 		<div id="content">
 			<!--TopBar-->
-			<div th:insert="~{templates/admin_template.html::topbar}"></div>
+			<div th:insert="~{templates/admin_template.html::topbar_noSession}"></div>
 			
 			<div class="container">
 				
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 					
-					<!-- Page Heading -->
-					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-					</div>
 					
 					<!-- Content Row -->
 					<div class="row">
 						
-						
-						<div class="col-lg-6">
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<a class="m-0 font-weight-bold text-primary"
-									   th:href="@{/employees/show(field = '')}">Employees</a>
-								</div>
-								<div class="card-body">
-									<img class="card-img-top" src="images/Users.jpg" style="height: 200px">
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<a class="m-0 font-weight-bold text-primary"
-									   th:href="@{/absences/show}">Absences</a>
-								</div>
-								<div class="card-body">
-									<img class="card-img-top" src="images/baja.jpg" style="height: 200px">
+						<h2>Login</h2>
+						<form class="form-horizontal" th:action="@{/login}" method="post">
+							<br></br>
+							
+							<div class="row">
+								<div class="col-md-12">
+									<label class="control-label col-sm-12" for="username">Phone: </label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="username" name="username"
+										       placeholder="Insert phone" autocomplete="off" required>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<a class="m-0 font-weight-bold text-primary"
-									   th:href="@{/users/show}">Users</a>
-								</div>
-								<div class="card-body">
-									<img class="card-img-top" src="images/users2.jpg" style="height: 200px">
+							<div class="row">
+								<div class="col-md-12">
+									<label class="control-label col-sm-12" for="password">Password: </label>
+									<div class="col-sm-10">
+										<input type="password" class="form-control" id="password" name="password"
+										       placeholder="Insert password" autocomplete="off" required>
+									</div>
 								</div>
 							</div>
-						</div>
-						
+							<br>
+							<div class="col-sm-12">
+								<button type="submit" class="btn btn-primary">Login</button>
+							</div>
+						</form>
+					
 					</div>
 				
 				</div>
